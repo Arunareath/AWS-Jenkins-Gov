@@ -24,10 +24,6 @@ spec:
         }
     }
 
-    envronment{
-        DOCKERHUB_CREDENTAILS = "docker-credentals"
-    }
-
     stages{
         stage('Checkout'){
 
