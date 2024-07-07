@@ -3,7 +3,7 @@ pipeline{
         kubernetes{
             label 'aws-infra-builder'
             defaultContainer 'jnlp'
-            yaml """
+            yaml '''
 apiVersion: v1
 kind: Pod
 metadata:
@@ -25,8 +25,7 @@ spec:
       image: jenkins/jnlp-slave:alpine
       args: ['$(JENKINS_SECRET)', '$(JENKINS_NAME)']
       serviceAccont: jenkins
-"""
-
+'''
         }
     }
 
