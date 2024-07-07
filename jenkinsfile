@@ -3,32 +3,29 @@ pipeline{
         kubernetes{
             label 'aws-infra-builder'
             defaultContainer 'jnlp'
-
             yaml """
-
-            apiVersion: v1
-            kind: Pod
-            metadata:
-              labels:
-                agent: agent-pod
-            spec:
-              containers:
-              - name: terraform
-                image: hashicorp/terraform:latest
-                command:
-                - cat
-                tty: true
-              - name: aws-cli
-                image: amazon/aws-cli:latest
-                command:
-                - cat
-                tty: true
-              - name: jnlp
-                image: jenkins/jnlp-slave:alpine
-                args: ['$(JENKINS_SECRET)', '$(JENKINS_NAME)']
-              serviceAccont: jenkins
-
-        """
+apiVersion: v1
+kind: Pod
+metadata:
+    labels:
+    agent: agent-pod
+spec:
+    containers:
+    - name: terraform
+      image: hashicorp/terraform:latest
+      command:
+      - cat
+      tty: true
+    - name: aws-cli
+      image: amazon/aws-cli:latest
+      command:
+      - cat
+      tty: true
+    - name: jnlp
+      image: jenkins/jnlp-slave:alpine
+      args: ['$(JENKINS_SECRET)', '$(JENKINS_NAME)']
+      serviceAccont: jenkins
+"""
 
         }
     }
