@@ -1,0 +1,90 @@
+pipeline{
+    agent{
+        kubernetes{
+            label 'aws-infra-builder'
+            defaultContainer 'jnlp'
+
+            yaml """
+
+            apiVersion: v1
+            kind: Pod
+            metadata:
+              labels:
+                agent: agent-pod
+            spec:
+              containers:
+              - name: terraform
+                image: hashicorp/terraform:latest
+                command:
+                - cat
+                tty: true
+              - name: aws-cli
+                image: amazon/aws-cli:latest
+                command:
+                - cat
+                tty: true
+              - name: jnlp
+                image: jenkins/jnlp-slave:alpine
+                args: ['$(JENKINS_SECRET)', '$(JENKINS_NAME)']
+              serviceAccont: jenkins
+
+        """
+
+        }
+    }
+
+    stages{
+        stage('Checkout'){
+
+            steps {
+                container('jnlp'){
+                    checkout scm
+                }
+            }
+
+        }
+
+        stage('AWS Credentials'){
+
+            steps{
+                script {
+                    withCredentails([
+                        [$class: 'AmazonWebServicesCredentialsBinding', credentialId: '247828134926']
+                    ]){
+                        sh '''
+                            export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+                            export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+                            export AWS_REGION=us-gov-west-1
+                        '''
+                    }
+                }
+            }
+
+        }
+
+        stage('terraform init'){
+            steps{
+                container('terraform'){
+                    sh 'terraform init'
+                }
+            }
+        }
+
+        stage('terraform plan'){
+            steps{
+                container('terraform'){
+                    sh 'terraform plan'
+                }
+            }
+        }
+
+        stage('terraform apply'){
+            steps{
+                container('terraform'){
+                    sh 'terraform apply -auto-approve'
+                }
+            }
+        }
+    }
+
+}
