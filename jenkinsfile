@@ -11,13 +11,8 @@ metadata:
     agent: agent-pod
 spec:
     containers:
-    - name: terraform
-      image: hashicorp/terraform:latest
-      command:
-      - cat
-      tty: true
-    - name: aws-cli
-      image: amazon/aws-cli:latest
+    - name: terraform-aws-cli
+      image: arunareath/terraform-aws-cli:latest
       command:
       - cat
       tty: true
@@ -27,6 +22,10 @@ spec:
       serviceAccont: jenkins
 '''
         }
+    }
+
+    envronment{
+        DOCKERHUB_CREDENTAILS = "docker-credentals"
     }
 
     stages{
@@ -60,7 +59,7 @@ spec:
 
         stage('terraform init'){
             steps{
-                container('terraform'){
+                container('terraform-aws-cli'){
                     sh 'terraform init'
                 }
             }
@@ -68,7 +67,7 @@ spec:
 
         stage('terraform plan'){
             steps{
-                container('terraform'){
+                container('terraform-aws-cli'){
                     sh 'terraform plan'
                 }
             }
@@ -76,7 +75,7 @@ spec:
 
         stage('terraform apply'){
             steps{
-                container('terraform'){
+                container('terraform-aws-cli'){
                     sh 'terraform apply -auto-approve'
                 }
             }
