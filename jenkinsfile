@@ -32,7 +32,7 @@ spec:
         stage('Checkout'){
 
             steps {
-                container('git'){
+                container('jnlp'){
                     git branch: 'main', credentialsId: 'github-credentials', url: 'https://github.com/Arunareath/AWS-Jenkins-Gov.git'
                 }
             }
