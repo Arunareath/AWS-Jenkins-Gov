@@ -36,16 +36,19 @@ spec:
     stages{
         stage('Checkout'){
             steps{
-                script {
-                        // Use the configured Git tool explicitly
-                        def gitTool = tool name: 'git', type: 'hudson.plugins.git.GitTool'
-                        // withEnv(["GIT_HOME=${gitTool}"]) {
-                        git url: 'https://github.com/Arunareath/AWS-Jenkins-Gov.git', credentialsId: 'github-credentials', gitTool: gitTool
+                // script {
+                //         // Use the configured Git tool explicitly
+                //         def gitTool = tool name: 'git', type: 'hudson.plugins.git.GitTool'
+                //         // withEnv(["GIT_HOME=${gitTool}"]) {
+                //         git url: 'https://github.com/Arunareath/AWS-Jenkins-Gov.git', credentialsId: 'github-credentials'
                     
-                        sh '''
-                            ls -ltra "/home/jenkins/agent/workspace/AWS-Pipeline"
-                        '''
+                //         sh '''
+                //             ls -ltra "/home/jenkins/agent/workspace/AWS-Pipeline"
+                //         '''
                     
+                // }
+                container('jnlp'){
+                    git clone "https://github.com/Arunareath/AWS-Jenkins-Gov.git"
                 }
             }
         }
