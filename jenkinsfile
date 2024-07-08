@@ -19,10 +19,6 @@ spec:
     - name: jnlp
       image: jenkins/inbound-agent:4.13-1
       args: ['$(JENKINS_SECRET)', '$(JENKINS_NAME)']
-    - name: git
-      image: alpine/git
-      command: ['cat']
-      tty: true
     serviceAccountName: jenkins
 '''
         }
@@ -36,18 +32,7 @@ spec:
     stages{
         stage('Checkout'){
             steps{
-                // script {
-                //         // Use the configured Git tool explicitly
-                //         def gitTool = tool name: 'git', type: 'hudson.plugins.git.GitTool'
-                //         // withEnv(["GIT_HOME=${gitTool}"]) {
-                //         git url: 'https://github.com/Arunareath/AWS-Jenkins-Gov.git', credentialsId: 'github-credentials'
-                    
-                //         sh '''
-                //             ls -ltra "/home/jenkins/agent/workspace/AWS-Pipeline"
-                //         '''
-                    
-                // }
-                container('jnlp'){
+                container('terraform-aws-cli'){
                     git clone "https://github.com/Arunareath/AWS-Jenkins-Gov.git"
                 }
             }
