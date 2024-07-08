@@ -43,15 +43,26 @@ spec:
 
             steps{
                 script {
+                    // withCredentials([
+                    //     [$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY', credentialId: '247828134926']
+                    // ]){
+                        
+                    //     // env.AWS_ACCESS_KEY_ID=credentials.AWS_ACCESS_KEY_ID
+                    //     // env.AWS_SECRET_ACCESS_KEY=credentials.AWS_SECRET_ACCESS_KEY
+                    //     env.AWS_REGION='us-gov-west-1'
+                        
+                    // }
                     withCredentials([
-                        [$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY', credentialId: '247828134926']
-                    ]){
-                        
-                        // env.AWS_ACCESS_KEY_ID=credentials.AWS_ACCESS_KEY_ID
-                        // env.AWS_SECRET_ACCESS_KEY=credentials.AWS_SECRET_ACCESS_KEY
-                        env.AWS_REGION='us-gov-west-1'
-                        
-                    }
+                        awsCredentials(credentialsId: '247828134926', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')
+                    ]) {
+                        container('terraform-aws-cli') {
+                            // Inside this block, AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY will be available
+                            sh '''
+                                aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+                                aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+                                aws configure set region us-gov-west-1
+                            '''
+                        }
                 }
             }
 
