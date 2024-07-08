@@ -68,6 +68,11 @@ spec:
         stage('terraform plan'){
             steps{
                 container('terraform-aws-cli'){
+                    // Print AWS credentials for verification
+                    sh 'env | grep AWS'
+            
+                    // Alternatively, you can use AWS CLI to verify authentication
+                    sh 'aws sts get-caller-identity'
                     sh 'terraform plan'
                 }
             }
