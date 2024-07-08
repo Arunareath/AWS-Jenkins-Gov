@@ -44,11 +44,11 @@ spec:
             steps{
                 script {
                     withCredentials([
-                        [$class: 'AmazonWebServicesCredentialsBinding', credentialId: '247828134926']
+                        [$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY', credentialId: '247828134926']
                     ]){
                         
-                        env.AWS_ACCESS_KEY_ID=credentials.AWS_ACCESS_KEY_ID
-                        env.AWS_SECRET_ACCESS_KEY=credentials.AWS_SECRET_ACCESS_KEY
+                        // env.AWS_ACCESS_KEY_ID=credentials.AWS_ACCESS_KEY_ID
+                        // env.AWS_SECRET_ACCESS_KEY=credentials.AWS_SECRET_ACCESS_KEY
                         env.AWS_REGION='us-gov-west-1'
                         
                     }
