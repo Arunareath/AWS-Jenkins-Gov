@@ -19,7 +19,11 @@ spec:
     - name: jnlp
       image: jenkins/inbound-agent:4.13-1
       args: ['$(JENKINS_SECRET)', '$(JENKINS_NAME)']
-      serviceAccont: jenkins
+    - name: git
+      image: alpine/git
+      command: ['cat']
+      tty: true
+    serviceAccountName: jenkins
 '''
         }
     }
@@ -28,8 +32,8 @@ spec:
         stage('Checkout'){
 
             steps {
-                container('jnlp'){
-                    checkout scm
+                container('git'){
+                    git branch: 'main', credentialsId: 'github-credentials', url: 'https://github.com/Arunareath/AWS-Jenkins-Gov.git'
                 }
             }
 
