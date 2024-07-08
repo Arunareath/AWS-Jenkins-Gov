@@ -39,23 +39,23 @@ spec:
             }
         }
 
-        // stage('AWS Credentials'){
+        stage('AWS Credentials'){
 
-        //     steps{
-        //         script {
-        //             withCredentials([
-        //                 [$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY', credentialId: '247828134926']
-        //             ]){
+            steps{
+                script {
+                    withCredentials([
+                        [$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY', credentialId: '247828134926']
+                    ]){
                         
-        //                 // env.AWS_ACCESS_KEY_ID=credentials.AWS_ACCESS_KEY_ID
-        //                 // env.AWS_SECRET_ACCESS_KEY=credentials.AWS_SECRET_ACCESS_KEY
-        //                 env.AWS_REGION='us-gov-west-1'
+                        // env.AWS_ACCESS_KEY_ID=credentials.AWS_ACCESS_KEY_ID
+                        // env.AWS_SECRET_ACCESS_KEY=credentials.AWS_SECRET_ACCESS_KEY
+                        env.AWS_REGION='us-gov-west-1'
                         
-        //             }
-        //         }
-        //     }
+                    }
+                }
+            }
 
-        // }
+        }
 
         stage('terraform init'){
             steps{
