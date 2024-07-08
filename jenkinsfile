@@ -27,15 +27,20 @@ spec:
 '''
         }
     }
+    
+    environment {
+        // Set the path to Git executable explicitly
+        GIT_HOME = '/usr/bin/git'
+    }
 
     stages{
         stage('Checkout'){
             steps{
                 script {
                         // Use the configured Git tool explicitly
-                        // def gitTool = tool name: 'git', type: 'hudson.plugins.git.GitTool'
+                        def gitTool = tool name: 'git', type: 'hudson.plugins.git.GitTool'
                         // withEnv(["GIT_HOME=${gitTool}"]) {
-                        git url: 'https://github.com/Arunareath/AWS-Jenkins-Gov.git', credentialsId: 'github-credentials'
+                        git url: 'https://github.com/Arunareath/AWS-Jenkins-Gov.git', credentialsId: 'github-credentials', gitTool: gitTool
                     
                         sh '''
                             ls -ltra "/home/jenkins/agent/workspace/AWS-Pipeline"
