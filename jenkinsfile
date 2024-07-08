@@ -33,7 +33,7 @@ spec:
         stage('Checkout'){
             steps{
                 container('terraform-aws-cli'){
-                    git tool: 'git', url: 'https://github.com/Arunareath/AWS-Jenkins-Gov.git'
+                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], userRemoteConfigs: [[url: 'https://github.com/Arunareath/AWS-Jenkins-Gov.git']]])
                 }
             }
         }
