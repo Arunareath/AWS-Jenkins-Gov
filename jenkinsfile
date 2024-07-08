@@ -63,9 +63,10 @@ spec:
                                 aws configure set region us-gov-west-1
                             '''
                         }
+                    }
                 }
-            }
 
+            }
         }
 
         stage('terraform init'){
