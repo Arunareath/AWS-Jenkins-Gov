@@ -53,7 +53,7 @@ spec:
                         
                     // }
                     withCredentials([
-                        awsCredentials(credentialsId: '247828134926', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')
+                        awsCredentials(credentialsId: 'aws-credentals', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')
                     ]) {
                         container('terraform-aws-cli') {
                             // Inside this block, AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY will be available
@@ -61,6 +61,7 @@ spec:
                                 aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
                                 aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
                                 aws configure set region us-gov-west-1
+                                aws sts get-caller-identity
                             '''
                         }
                     }
