@@ -69,34 +69,34 @@ spec:
             }
         }
 
-        // stage('terraform init'){
-        //     steps{
-        //         container('terraform-aws-cli'){
-        //             sh 'terraform init'
-        //         }
-        //     }
-        // }
+        stage('terraform init'){
+            steps{
+                container('terraform-aws-cli'){
+                    sh 'terraform init'
+                }
+            }
+        }
 
-        // stage('terraform plan'){
-        //     steps{
-        //         container('terraform-aws-cli'){
-        //             // Print AWS credentials for verification
-        //             sh 'env | grep AWS'
+        stage('terraform plan'){
+            steps{
+                container('terraform-aws-cli'){
+                    // Print AWS credentials for verification
+                    sh 'env | grep AWS'
             
-        //             // Alternatively, you can use AWS CLI to verify authentication
-        //             sh 'aws sts get-caller-identity'
-        //             sh 'terraform plan'
-        //         }
-        //     }
-        // }
+                    // Alternatively, you can use AWS CLI to verify authentication
+                    sh 'aws sts get-caller-identity'
+                    sh 'terraform plan'
+                }
+            }
+        }
 
-        // stage('terraform apply'){
-        //     steps{
-        //         container('terraform-aws-cli'){
-        //             sh 'terraform apply -auto-approve'
-        //         }
-        //     }
-        // }
+        stage('terraform apply'){
+            steps{
+                container('terraform-aws-cli'){
+                    sh 'terraform apply -auto-approve'
+                }
+            }
+        }
     }
 
 }
