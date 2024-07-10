@@ -52,9 +52,8 @@ spec:
                     //     env.AWS_REGION='us-gov-west-1'
                         
                     // }
-                    withCredentials([
-                        awsCredentials(credentialsId: 'aws-credentals', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')
-                    ]) {
+                    withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-credentals', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')])
+                    {
                         container('terraform-aws-cli') {
                             // Inside this block, AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY will be available
                             sh '''
